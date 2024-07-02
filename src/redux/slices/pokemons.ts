@@ -47,7 +47,6 @@ export const pokemonsSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.pokemons = action.payload;
-            console.log("pokemons fetched: ", action.payload);
         });
         builder.addCase(fetchPokemonsAsyncThunk.rejected, (state, action) => {
             state.loading = false;
