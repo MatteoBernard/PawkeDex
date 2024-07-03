@@ -1,7 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {Pokedex} from "../screens";
-import {Regions} from "../screens/Regions";
-import {Favorites} from "../screens/Favorites";
+import {Favorites, Pokedex, Regions} from "../screens";
 
 export type RootStackParamList = {
     Pokedex: undefined;
