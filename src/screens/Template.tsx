@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet} from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet} from "react-native";
 import {NavigationMenu} from "../components";
 
 type TemplateProps = {
@@ -10,7 +10,9 @@ export const Template = ({children}: TemplateProps) => {
     return (
         <SafeAreaView style={styles.container}>
 
-            {children}
+            <ScrollView>
+                {children}
+            </ScrollView>
 
             <NavigationMenu />
 
