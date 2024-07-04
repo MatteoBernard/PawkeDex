@@ -14,7 +14,7 @@ export const App = () => {
     );
 }
 
-function AppContent() {
+const AppContent = () => {
     const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {

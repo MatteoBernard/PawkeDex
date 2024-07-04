@@ -1,9 +1,10 @@
 import {View, Text} from "react-native";
+import {Template} from "./Template";
 
 export const Pokedex = () => {
     return (
-        <View>
+        <Template>
             <Text>Pokedex</Text>
-        </View>
+        </Template>
     )
 }
