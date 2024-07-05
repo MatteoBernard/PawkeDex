@@ -5,7 +5,7 @@ import {Template} from "./Template";
 import {useEffect, useState} from "react";
 import {fetchPokemonByName} from "../api/pokeApi";
 import {Pokemon} from "pokenode-ts";
-import {isFavoritePokemon, storeFavoritePokemon} from "../utils/storage";
+import {isFavoritePokemon, removeFavoritePokemon, storeFavoritePokemon} from "../utils/storage";
 
 export const ShowPokemon = () => {
 
@@ -15,8 +15,13 @@ export const ShowPokemon = () => {
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
     const handleLike = () => {
-        setIsFavorite(!isFavorite);
-        storeFavoritePokemon(name, url);
+        if (isFavorite) {
+            setIsFavorite(false);
+            removeFavoritePokemon(name);
+        } else {
+            setIsFavorite(true);
+            storeFavoritePokemon(name, url);
+        }
     }
 
     useEffect(() => {
