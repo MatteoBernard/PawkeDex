@@ -1,20 +1,29 @@
-import {View, Text} from "react-native";
+import {View, Text, Button} from "react-native";
 import {useRoute, RouteProp} from "@react-navigation/native";
 import {RootStackParamList} from "../navigation";
 import {Template} from "./Template";
 import {useEffect, useState} from "react";
 import {fetchPokemonByName} from "../api/pokeApi";
 import {Pokemon} from "pokenode-ts";
+import {isFavoritePokemon, storeFavoritePokemon} from "../utils/storage";
 
 export const ShowPokemon = () => {
 
     const route = useRoute<RouteProp<RootStackParamList, 'ShowPokemon'>>();
-    const { name } = route.params;
-
+    const { name, url } = route.params;
     const [pokemon, setPokemon] = useState<Pokemon | null>(null);
+    const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+    const handleLike = () => {
+        setIsFavorite(!isFavorite);
+        storeFavoritePokemon(name, url);
+    }
 
     useEffect(() => {
         console.log(name);
+        isFavoritePokemon(name).then((result: boolean) => {
+            setIsFavorite(result);
+        });
         fetchPokemonByName(name).then((result: Pokemon) => {
             setPokemon(result);
         });
@@ -30,6 +39,7 @@ export const ShowPokemon = () => {
                     <Text>{pokemon.height}</Text>
                     <Text>{pokemon.weight}</Text>
                     <Text>{pokemon.base_experience}</Text>
+                    <Button title={isFavorite ? "Remove like" : "Like"} onPress={() => {handleLike()}} />
                 </View>
             )}
         </Template>

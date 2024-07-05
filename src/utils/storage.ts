@@ -30,6 +30,16 @@ export const getAllFavoritePokemon = async (): Promise<{name: string, url: strin
     }
 }
 
+export const isFavoritePokemon = async (name: string): Promise<boolean> => {
+    try {
+        const result = await AsyncStorage.getItem(name);
+        return result ? true : false;
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
+}
+
 export const removeFavoritePokemon = async (name: string) => {
     try {
         await AsyncStorage.removeItem(name);
