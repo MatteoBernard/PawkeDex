@@ -35,3 +35,14 @@ export const fetchPokemon = async (id: number): Promise<Pokemon> => {
             throw error;
         });
 }
+
+export const fetchPokemonByName = async (name: string): Promise<Pokemon> => {
+    return await pokemonClient.getPokemonByName(name)
+        .then((response) => {
+            console.log(response);
+            return response;
+        })
+        .catch((error) => {
+            throw error;
+        });
+}
