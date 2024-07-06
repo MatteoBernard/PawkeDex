@@ -6,7 +6,7 @@ export type RootStackParamList = {
     Pokedex: undefined;
     Regions: undefined;
     Favorites: undefined;
-    ShowPokemon: { name: string ; url: string};
+    ShowPokemon: { name: string ; url: string, from: 'Pokedex' | 'Favorites'};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

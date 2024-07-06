@@ -16,7 +16,7 @@ export const Pokedex = () => {
 
             <View>
                 {pokemons.map((pokemon, index) => (
-                    <TouchableOpacity key={index} onPress={() => {navigation.navigate('ShowPokemon', {name: pokemon.name, url: pokemon.url})}}>
+                    <TouchableOpacity key={index} onPress={() => {navigation.navigate('ShowPokemon', {name: pokemon.name, url: pokemon.url, from: 'Pokedex'})}}>
                         <Text>{pokemon.name}</Text>
                     </TouchableOpacity>
 
