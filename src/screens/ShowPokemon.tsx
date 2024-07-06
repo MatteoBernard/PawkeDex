@@ -68,6 +68,9 @@ export const ShowPokemon = () => {
         if (isFavorite) {
             setIsFavorite(false);
             removeFavoritePokemon(name);
+            if (from === 'Favorites') {
+                navigation.navigate('Favorites');
+            }
         } else {
             setIsFavorite(true);
             storeFavoritePokemon(name, url);
