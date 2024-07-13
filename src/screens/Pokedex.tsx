@@ -9,7 +9,7 @@ import { RootStackParamList } from "../navigation";
 export const Pokedex = () => {
     const pokemons: { name: string; url: string }[] = useSelector((state: any) => state.pokemons.pokemons);
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-    const placeholderImage = 'https://via.placeholder.com/50'; // URL de l'image de remplacement
+    const placeholderImage = 'https://via.placeholder.com/50';
 
     return (
         <Template>

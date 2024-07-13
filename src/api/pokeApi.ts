@@ -1,4 +1,4 @@
-import {LocationClient, Pokemon, PokemonClient} from "pokenode-ts";
+import {LocationClient, Pokemon, PokemonClient, Region} from "pokenode-ts";
 
 const pokemonClient: PokemonClient = new PokemonClient();
 const locationClient: LocationClient = new LocationClient();
@@ -38,6 +38,17 @@ export const fetchPokemon = async (id: number): Promise<Pokemon> => {
 
 export const fetchPokemonByName = async (name: string): Promise<Pokemon> => {
     return await pokemonClient.getPokemonByName(name)
+        .then((response) => {
+            console.log(response);
+            return response;
+        })
+        .catch((error) => {
+            throw error;
+        });
+}
+
+export const fetchRegionByName = async (name: string): Promise<Region> => {
+    return await locationClient.getRegionByName(name)
         .then((response) => {
             console.log(response);
             return response;
