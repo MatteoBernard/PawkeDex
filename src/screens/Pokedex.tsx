@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Image, StyleSheet, TextInput} from "react-native";
+import {View, TouchableOpacity, Image, StyleSheet, TextInput} from "react-native";
 import { Template } from "./Template";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation";
+import { Text } from "../styles/StyledText";
 
 export const Pokedex = () => {
 
