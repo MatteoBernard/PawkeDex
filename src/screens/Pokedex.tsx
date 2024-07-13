@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, Image, StyleSheet, TextInput} from "react-native";
 import { Template } from "./Template";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -7,16 +7,27 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation";
 
 export const Pokedex = () => {
+
     const pokemons: { name: string; url: string }[] = useSelector((state: any) => state.pokemons.pokemons);
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
     const placeholderImage = 'https://via.placeholder.com/50';
 
+    const [search, setSearch] = useState('');
+    const filteredPokemons = pokemons.filter(pokemon => pokemon.name.includes(search));
+
     return (
         <Template>
             <Text style={styles.title}>Pokedex</Text>
+            <TextInput
+                style={styles.input}
+                value={search}
+                onChangeText={setSearch}
+                placeholder="Search by name"
+            />
+
 
             <View>
-                {pokemons.map((pokemon, index) => {
+                {filteredPokemons.map((pokemon, index) => {
                     const pokemonId = pokemon.url.split('/')[6];
                     const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
 
@@ -64,5 +75,11 @@ const styles = StyleSheet.create({
     pokemonImage: {
         width: 50,
         height: 50,
+    },
+    input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 20,
     },
 });
