@@ -1,16 +1,20 @@
-import {SafeAreaView, ScrollView, StyleSheet} from "react-native";
-import {NavigationMenu} from "../components";
+import {SafeAreaView, ScrollView, StyleSheet, Dimensions} from "react-native";
+import {Header, NavigationMenu} from "../components";
+
+const screenHeight = Dimensions.get('window').height;
 
 type TemplateProps = {
     children: React.ReactNode;
-
+    title: string;
 }
 
-export const Template = ({children}: TemplateProps) => {
+export const Template = ({children, title}: TemplateProps) => {
     return (
         <SafeAreaView style={styles.container}>
 
-            <ScrollView>
+            <Header title={title} />
+
+            <ScrollView style={styles.scroll}>
                 {children}
             </ScrollView>
 
@@ -23,6 +27,10 @@ export const Template = ({children}: TemplateProps) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'space-between'
-    }
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    scroll: {
+        height: screenHeight * 0.8,
+    },
 });

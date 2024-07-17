@@ -79,7 +79,7 @@ export const ShowPokemon = () => {
 
 
     return (
-        <Template>
+        <Template title={pokemon?.name ?? "Pokemon"}>
             <Text>{name}</Text>
             {pokemon && (
                 <View>

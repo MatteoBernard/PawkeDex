@@ -21,7 +21,7 @@ export const Favorites = () => {
     }, [favorites]);
 
     return (
-        <Template>
+        <Template title={"Favorites"}>
             <Text style={styles.title}>Favorites</Text>
             <View>
                 {favorites.map((favorite, index) => {

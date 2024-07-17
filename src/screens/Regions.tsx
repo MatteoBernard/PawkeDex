@@ -11,7 +11,7 @@ export const Regions = () => {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     return (
-        <Template>
+        <Template title={"Regions"}>
             <Text>Regions</Text>
 
             <View>

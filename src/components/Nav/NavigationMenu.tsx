@@ -1,7 +1,11 @@
-import {TouchableOpacity, View, Text, StyleSheet} from "react-native";
+import {View, StyleSheet, Dimensions} from "react-native";
 import {RootStackParamList} from "../../navigation";
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from "@react-navigation/stack";
+import {NavigationButton} from "./NavigationButton";
+import {colors} from "../../styles";
+
+const screenHeight = Dimensions.get('window').height;
 
 export const NavigationMenu = () => {
 
@@ -9,15 +13,9 @@ export const NavigationMenu = () => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("Pokedex")}}>
-                <Text>Pokedex</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("Regions")}}>
-                <Text>Regions</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("Favorites")}}>
-                <Text>Favorites</Text>
-            </TouchableOpacity>
+            <NavigationButton title={"Pokedex"} onPress={() => {navigation.navigate("Pokedex")}} />
+            <NavigationButton title={"Regions"} onPress={() => {navigation.navigate("Regions")}} />
+            <NavigationButton title={"Favorites"} onPress={() => {navigation.navigate("Favorites")}} />
         </View>
     );
 }
@@ -26,11 +24,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         justifyContent: "space-around",
-        padding: 10,
-    },
-    button: {
-        padding: 10,
-        borderWidth: 1,
-        borderRadius: 5,
+        alignItems: "center",
+        height: screenHeight * 0.1,
+        backgroundColor: colors.dark
     },
 });

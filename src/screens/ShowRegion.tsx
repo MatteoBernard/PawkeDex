@@ -22,7 +22,7 @@ export const ShowRegion = () => {
     }, [name]);
 
     return (
-        <Template>
+        <Template title={region?.name ?? "Region"}>
             <Text>ShowRegion</Text>
             {region && (
                 <View>

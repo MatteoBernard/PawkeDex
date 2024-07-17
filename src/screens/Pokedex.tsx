@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, Image, StyleSheet, TextInput} from "react-native";
+import {View, TouchableOpacity, Image, StyleSheet} from "react-native";
 import { Template } from "./Template";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation";
 import { Text } from "../styles/StyledText";
+import TextInput from "../styles/StyledTextInput"
 
 export const Pokedex = () => {
 
@@ -17,15 +18,13 @@ export const Pokedex = () => {
     const filteredPokemons = pokemons.filter(pokemon => pokemon.name.includes(search));
 
     return (
-        <Template>
-            <Text style={styles.title}>Pokedex</Text>
+        <Template title={"Pokedex"}>
             <TextInput
                 style={styles.input}
                 value={search}
                 onChangeText={setSearch}
-                placeholder="Search by name"
+                placeholder="Search Pokemon by name"
             />
-
 
             <View>
                 {filteredPokemons.map((pokemon, index) => {
@@ -54,12 +53,6 @@ export const Pokedex = () => {
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-    },
     pokemonContainer: {
         flexDirection: 'row',
         alignItems: 'center',
