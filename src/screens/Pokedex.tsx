@@ -1,79 +1,134 @@
-import React, {useState} from 'react';
-import {View, TouchableOpacity, Image, StyleSheet} from "react-native";
+import React, {useState, useRef, useEffect} from 'react';
+import {View, Image, StyleSheet, FlatList, ViewToken, ImageBackground} from "react-native";
 import { Template } from "./Template";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../navigation";
-import { Text } from "../styles/StyledText";
 import TextInput from "../styles/StyledTextInput"
+import {colors} from "../styles";
+import {PressablePokemon} from "../components";
 
 export const Pokedex = () => {
 
     const pokemons: { name: string; url: string }[] = useSelector((state: any) => state.pokemons.pokemons);
-    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-    const placeholderImage = 'https://via.placeholder.com/50';
 
     const [search, setSearch] = useState('');
-    const filteredPokemons = pokemons.filter(pokemon => pokemon.name.includes(search));
+    const [currentPokemon, setCurrentPokemon] = useState(pokemons[0]);
+    const filteredPokemons = pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(search.toLowerCase()));
+
+    const viewabilityConfig = useRef({ viewAreaCoveragePercentThreshold: 50 });
+
+    const handleViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
+        if (viewableItems.length > 0) {
+            setCurrentPokemon(viewableItems[0].item);
+        }
+    });
+
+    useEffect(() => {
+        if (filteredPokemons.length > 0) {
+            setCurrentPokemon(filteredPokemons[0]);
+        }
+    }, [search]);
 
     return (
         <Template title={"Pokedex"}>
-            <TextInput
-                style={styles.input}
-                value={search}
-                onChangeText={setSearch}
-                placeholder="Search Pokemon by name"
-            />
-
-            <View>
-                {filteredPokemons.map((pokemon, index) => {
-                    const pokemonId = pokemon.url.split('/')[6];
-                    const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
-
-                    return (
-                        <TouchableOpacity
-                            key={index}
-                            onPress={() => { navigation.navigate('ShowPokemon', { name: pokemon.name, url: pokemon.url, from: 'Pokedex' }); }}
-                        >
-                            <View style={styles.pokemonContainer}>
-                                <Text style={styles.pokemonName}>{pokemon.name}</Text>
-                                <Image
-                                    style={styles.pokemonImage}
-                                    source={{ uri: spriteUrl }}
-                                    defaultSource={{ uri: placeholderImage }}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                    );
-                })}
+            <View style={styles.inputContainer}>
+                <View style={styles.inputInnerContainer}>
+                    <TextInput
+                        style={styles.input}
+                        value={search}
+                        onChangeText={setSearch}
+                        placeholder="Search Pokemon"
+                    />
+                    <Image
+                        style={styles.inputImage}
+                        source={require('../../assets/images/search.png')}
+                    />
+                </View>
             </View>
+
+            <ImageBackground
+                source={require('../../assets/images/box_bg.png')}
+                style={styles.currentPokemonContainer}
+                borderRadius={10}
+            >
+                {currentPokemon &&
+                    <Image
+                        style={styles.currentPokemonImage}
+                        source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${currentPokemon.url.split('/')[6]}.png` }}
+                    />
+                }
+            </ImageBackground>
+
+            <View style={styles.flatlistContainer}>
+                <FlatList
+                    data={filteredPokemons}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => index.toString()}
+                    onViewableItemsChanged={handleViewableItemsChanged.current}
+                    viewabilityConfig={viewabilityConfig.current}
+                    renderItem={({ item: pokemon, index }) => {
+                        const pokemonId = pokemon.url.split('/')[6];
+                        const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+
+                        return (
+                            <PressablePokemon pokemon={pokemon} spriteUrl={spriteUrl} from={"Pokedex"} />
+                        );
+                    }}
+                />
+            </View>
+
         </Template>
     );
 }
 
 const styles = StyleSheet.create({
-    pokemonContainer: {
+    currentPokemonContainer: {
+        alignItems: 'center',
+        padding: 10,
+        borderWidth: 3,
+        borderColor: colors.dark,
+        borderRadius: 10,
+        margin: 10,
+        overflow: 'hidden',
+    },
+    currentPokemonImage: {
+        width: 150,
+        height: 150,
+    },
+    inputContainer: {
+        borderWidth: 3,
+        borderColor: colors.dark,
+        borderRadius: 10,
+        margin: 10,
+    },
+    inputInnerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
+        borderColor: colors.secondary,
+        borderLeftWidth: 7,
+        borderRightWidth: 7,
+        borderRadius: 7,
     },
-    pokemonName: {
-        fontSize: 18,
-        flex: 1,
-    },
-    pokemonImage: {
-        width: 50,
-        height: 50,
+    inputImage: {
+        height: 30,
+        width: 30,
+        aspectRatio: 1,
+        resizeMode: "contain",
+        margin: 5,
     },
     input: {
+        flex: 1,
         height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 20,
+        fontSize: 12,
+        color: colors.dark,
+        padding: 5,
     },
+    flatlistContainer: {
+        margin: 10,
+        padding: 5,
+        borderWidth: 3,
+        borderColor: colors.dark,
+        borderRadius: 10,
+        flex: 1,
+        backgroundColor: colors.dark
+    }
 });

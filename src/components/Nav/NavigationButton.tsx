@@ -21,14 +21,15 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: colors.secondary,
         paddingHorizontal: 8,
-        borderRadius: 5,
+        borderRadius: 10,
         height: "60%"
     },
     innerButton: {
         backgroundColor: colors.primary,
         flex: 1,
         justifyContent: 'center',
-        borderRadius: 5,
+        alignItems: 'center',
+        borderRadius: 10,
     },
     text: {
         fontSize: 10,

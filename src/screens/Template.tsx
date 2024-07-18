@@ -1,5 +1,6 @@
-import {SafeAreaView, ScrollView, StyleSheet, Dimensions} from "react-native";
+import {SafeAreaView, StyleSheet, Dimensions, View} from "react-native";
 import {Header, NavigationMenu} from "../components";
+import {colors} from "../styles";
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -14,9 +15,9 @@ export const Template = ({children, title}: TemplateProps) => {
 
             <Header title={title} />
 
-            <ScrollView style={styles.scroll}>
+            <View style={styles.scroll}>
                 {children}
-            </ScrollView>
+            </View>
 
             <NavigationMenu />
 
@@ -32,5 +33,6 @@ const styles = StyleSheet.create({
     },
     scroll: {
         height: screenHeight * 0.8,
+        backgroundColor: colors.primary
     },
 });
