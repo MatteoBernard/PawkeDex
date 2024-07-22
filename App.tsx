@@ -9,7 +9,6 @@ import {useFonts} from "expo-font";
 import { ThemeProvider } from 'styled-components/native';
 import {Theme} from "./src/styles";
 
-
 export const App = () => {
 
     const [fontsLoaded] = useFonts({

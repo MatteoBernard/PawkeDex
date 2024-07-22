@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
+        //paddingTop: 30,
     },
     scroll: {
         height: screenHeight * 0.8,

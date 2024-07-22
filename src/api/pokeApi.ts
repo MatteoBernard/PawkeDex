@@ -1,4 +1,9 @@
-import {LocationClient, Pokemon, PokemonClient, Region} from "pokenode-ts";
+import {
+    LocationClient,
+    Pokemon,
+    PokemonClient,
+    Region,
+} from "pokenode-ts";
 
 const pokemonClient: PokemonClient = new PokemonClient();
 const locationClient: LocationClient = new LocationClient();
