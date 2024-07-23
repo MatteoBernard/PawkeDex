@@ -11,6 +11,7 @@ import {useSelector} from "react-redux";
 import {StyledContainer, StatsTab, MovesetTab, SpritesTab} from "../components";
 import {Text} from "../styles/StyledText";
 import {colors} from "../styles";
+import PokeballLoader from "../components/PokeballLoader";
 
 export const ShowPokemon = () => {
 
@@ -111,7 +112,7 @@ export const ShowPokemon = () => {
 
     return (
         <Template title={"Pokemon"}>
-            {pokemon && (
+            {pokemon ? (
                 <>
                     <View style={styles.rowContainer}>
                         {
@@ -214,7 +215,10 @@ export const ShowPokemon = () => {
                         }
                     </View>
                 </>
-            )}
+            ) : (
+                <PokeballLoader />
+                )
+            }
         </Template>
     )
 }

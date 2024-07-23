@@ -5,10 +5,12 @@ import {PressableRegion} from "../components";
 import {useNavigation} from "@react-navigation/native";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {RootStackParamList} from "../navigation";
+import PokeballLoader from "../components/PokeballLoader";
 
 export const Regions = () => {
 
     const regions: { name: string; url: string }[] = useSelector((state: any) => state.regions.regions);
+    const loading = useSelector((state: any) => state.regions.loading);
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     regions.map((region) => {
@@ -18,11 +20,17 @@ export const Regions = () => {
     return (
         <Template title={"Regions"}>
             <ScrollView style={styles.container}>
-                {regions.map((region, index) => (
-                    <View style={styles.regionContainer} key={index}>
-                        <PressableRegion region={region.name} onPress={() => {navigation.navigate('ShowRegion', { name: region.name })}} />
-                    </View>
-                ))}
+                {loading ? (
+                    <PokeballLoader />
+                    ) : (
+                        <>
+                        {regions.map((region, index) => (
+                                <View style={styles.regionContainer} key={index}>
+                                    <PressableRegion region={region.name} onPress={() => {navigation.navigate('ShowRegion', { name: region.name })}} />
+                                </View>
+                            ))}
+                        </>)
+                }
             </ScrollView>
         </Template>
     )

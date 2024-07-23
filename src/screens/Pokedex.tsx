@@ -5,10 +5,12 @@ import { useSelector } from "react-redux";
 import TextInput from "../styles/StyledTextInput"
 import {colors} from "../styles";
 import {PressablePokemon} from "../components";
+import PokeballLoader from "../components/PokeballLoader";
 
 export const Pokedex = () => {
 
     const pokemons: { name: string; url: string }[] = useSelector((state: any) => state.pokemons.pokemons);
+    const loading = useSelector((state: any) => state.pokemons.loading);
 
     const [search, setSearch] = useState('');
     const [currentPokemon, setCurrentPokemon] = useState(pokemons[0]);
@@ -30,64 +32,75 @@ export const Pokedex = () => {
 
     return (
         <Template title={"Pokedex"}>
-            <View style={styles.inputContainer}>
-                <View style={styles.inputInnerContainer}>
-                    <TextInput
-                        style={styles.input}
-                        value={search}
-                        onChangeText={setSearch}
-                        placeholder="Search Pokemon"
-                    />
-                    <Image
-                        style={styles.inputImage}
-                        source={require('../../assets/images/search.png')}
-                    />
+            {loading ? (
+                <PokeballLoader />
+            ) : (
+                <View style={styles.container}>
+                    <View style={styles.inputContainer}>
+                        <View style={styles.inputInnerContainer}>
+                            <TextInput
+                                style={styles.input}
+                                value={search}
+                                onChangeText={setSearch}
+                                placeholder="Search Pokemon"
+                            />
+                            <Image
+                                style={styles.inputImage}
+                                source={require('../../assets/images/search.png')}
+                            />
+                        </View>
+                    </View>
+
+                    <ImageBackground
+                        source={require('../../assets/images/box_bg.png')}
+                        style={styles.currentPokemonContainer}
+                        borderRadius={10}
+                    >
+                        {currentPokemon &&
+                            <Image
+                                style={styles.currentPokemonImage}
+                                source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${currentPokemon.url.split('/')[6]}.png` }}
+                            />
+                        }
+                    </ImageBackground>
+
+                    <View style={styles.flatlistContainer}>
+                        <FlatList
+                            data={filteredPokemons}
+                            showsVerticalScrollIndicator={false}
+                            keyExtractor={(item, index) => index.toString()}
+                            onViewableItemsChanged={handleViewableItemsChanged.current}
+                            viewabilityConfig={viewabilityConfig.current}
+                            renderItem={({ item: pokemon, index }) => {
+                                const pokemonId = pokemon.url.split('/')[6];
+                                const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+
+                                return (
+                                    <PressablePokemon pokemon={pokemon} spriteUrl={spriteUrl} from={"Pokedex"} />
+                                );
+                            }}
+                        />
+                    </View>
                 </View>
-            </View>
-
-            <ImageBackground
-                source={require('../../assets/images/box_bg.png')}
-                style={styles.currentPokemonContainer}
-                borderRadius={10}
-            >
-                {currentPokemon &&
-                    <Image
-                        style={styles.currentPokemonImage}
-                        source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${currentPokemon.url.split('/')[6]}.png` }}
-                    />
-                }
-            </ImageBackground>
-
-            <View style={styles.flatlistContainer}>
-                <FlatList
-                    data={filteredPokemons}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    onViewableItemsChanged={handleViewableItemsChanged.current}
-                    viewabilityConfig={viewabilityConfig.current}
-                    renderItem={({ item: pokemon, index }) => {
-                        const pokemonId = pokemon.url.split('/')[6];
-                        const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
-
-                        return (
-                            <PressablePokemon pokemon={pokemon} spriteUrl={spriteUrl} from={"Pokedex"} />
-                        );
-                    }}
-                />
-            </View>
+                )
+            }
 
         </Template>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        margin: 10,
+        gap: 10,
+        flex: 1,
+    },
     currentPokemonContainer: {
         alignItems: 'center',
         padding: 10,
         borderWidth: 3,
         borderColor: colors.dark,
         borderRadius: 10,
-        margin: 10,
         overflow: 'hidden',
     },
     currentPokemonImage: {
@@ -98,7 +111,6 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: colors.dark,
         borderRadius: 10,
-        margin: 10,
     },
     inputInnerContainer: {
         flexDirection: 'row',
@@ -123,7 +135,6 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     flatlistContainer: {
-        margin: 10,
         padding: 5,
         borderWidth: 3,
         borderColor: colors.dark,

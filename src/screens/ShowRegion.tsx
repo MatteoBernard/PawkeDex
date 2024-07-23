@@ -8,6 +8,7 @@ import {PressableRegion, StyledContainer} from "../components";
 import {Image, StyleSheet, View, FlatList} from "react-native";
 import {Text} from '../styles/StyledText'
 import {colors} from "../styles";
+import PokeballLoader from "../components/PokeballLoader";
 
 export const ShowRegion = () => {
 
@@ -45,7 +46,7 @@ export const ShowRegion = () => {
 
     return (
         <Template title={region?.name ?? "Region"}>
-            {region && (
+            {region ? (
                 <View style={styles.container}>
                     <PressableRegion region={name} />
 
@@ -80,7 +81,10 @@ export const ShowRegion = () => {
                     </View>
 
                 </View>
-            )}
+            ) : (
+                <PokeballLoader />
+                )
+            }
         </Template>
     );
 }
