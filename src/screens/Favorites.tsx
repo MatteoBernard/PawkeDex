@@ -25,7 +25,7 @@ export const Favorites = () => {
         <Template title={"Favorites"}>
             <View style={styles.container}>
 
-                {favorites.length === 0 || loading ? (
+                { loading ? (
                     <PokeballLoader />
                 ) : (
                     <>

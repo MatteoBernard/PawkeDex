@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: colors.dark,
         borderRadius: 10,
-        backgroundColor: colors.secondary
+        backgroundColor: colors.secondary,
     },
     innerContainer: {
         padding: 5,

@@ -187,16 +187,29 @@ export const ShowPokemon = () => {
 
                     <View style={styles.rowContainer}>
                         {
-                            former &&
-                            <Pressable onPress={() => {navigation.navigate('ShowPokemon', {name: former?.name, url: former?.url, from: from})}} style={styles.back}>
-                                <Image
-                                    source={require('../../assets/images/back.png')}
-                                    style={styles.img}
-                                />
-                            </Pressable>
+                            former ? (
+                                <Pressable onPress={() => {navigation.navigate('ShowPokemon', {name: former?.name, url: former?.url, from: from})}} style={styles.back} >
+                                    <Image
+                                        source={require('../../assets/images/back.png')}
+                                        style={styles.img}
+                                    />
+                                </Pressable>
+                                ) : (
+                                    <View style={styles.back}>
+                                        <Image
+                                            source={require('../../assets/images/star.png')}
+                                            style={styles.img}
+                                        />
+                                    </View>
+                            )
+
                         }
                         <Pressable onPress={() => {handleLike()}} style={styles.pressableRow}>
                             <StyledContainer>
+                                <Image
+                                    source={require('../../assets/images/pawkedex_logo_crop.png')}
+                                    style={styles.img}
+                                />
                                 <Text style={styles.name}>{isFavorite ? "Remove like" : "Like"}</Text>
                                 <Image
                                     source={require('../../assets/images/pawkedex_logo_crop.png')}
@@ -205,13 +218,22 @@ export const ShowPokemon = () => {
                             </StyledContainer>
                         </Pressable>
                         {
-                            next &&
-                            <Pressable onPress={() => {navigation.navigate('ShowPokemon', {name: next?.name, url: next?.url, from: from})}} style={styles.back}>
-                                <Image
-                                    source={require('../../assets/images/next.png')}
-                                    style={styles.img}
-                                />
-                            </Pressable>
+                            next ? (
+                                <Pressable onPress={() => {navigation.navigate('ShowPokemon', {name: next?.name, url: next?.url, from: from})}} style={styles.back}>
+                                    <Image
+                                        source={require('../../assets/images/next.png')}
+                                        style={styles.img}
+                                    />
+                                </Pressable>
+                                ) : (
+                                <View style={styles.back}>
+                                    <Image
+                                        source={require('../../assets/images/star.png')}
+                                        style={styles.img}
+                                    />
+                                </View>
+                            )
+
                         }
                     </View>
                 </>
@@ -252,6 +274,7 @@ const styles = StyleSheet.create({
     },
     name: {
         marginHorizontal: 10,
+        height: 20,
     },
     img: {
         height: 20,
