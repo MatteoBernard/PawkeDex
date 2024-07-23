@@ -1,9 +1,6 @@
 import {View, Pressable, ImageBackground, StyleSheet, ImageSourcePropType} from "react-native";
 import React from "react";
 import {Text} from "../styles/StyledText";
-import {useNavigation} from "@react-navigation/native";
-import {StackNavigationProp} from "@react-navigation/stack";
-import {RootStackParamList} from "../navigation";
 
 type PressableRegionProps = {
     region: string;
@@ -12,7 +9,7 @@ type PressableRegionProps = {
 
 const regionImages: { [key: string]: ImageSourcePropType } = {
     kanto: require('../../assets/images/regions/kanto.png'),
-    johto: require('../../assets/images/regions/johto.png'),
+    johto: require('../../assets/images/regions/johto.jpg'),
     hoenn: require('../../assets/images/regions/hoenn.png'),
     sinnoh: require('../../assets/images/regions/sinnoh.png'),
     unova: require('../../assets/images/regions/unova.png'),
