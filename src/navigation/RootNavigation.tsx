@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {Favorites, Pokedex, Regions} from "../screens";
-import {ShowPokemon} from "../screens/ShowPokemon";
-import {ShowRegion} from "../screens/ShowRegion";
+import {Favorites, Pokedex, Regions, ShowRegion, ShowPokemon} from "../screens";
+import { enableScreens } from 'react-native-screens';
+
+enableScreens();
 
 export type RootStackParamList = {
     Pokedex: undefined;
